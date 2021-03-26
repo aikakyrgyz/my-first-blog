@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Django Girls blog</title>
- <body>
-        <div>
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
-        {% for post in posts %}
-        <div>
-            <p>Piblished date: {{post.published_date}}</p>
-            <h1><a href = "">{{post.title}}</a></h1>
+{% extends 'blog/base.html' %}
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+<!--            Параметр post_detail означает, что Django будет искать URL с именем post_detail в файле blog.urls.py.-->
+<!--            # Поскольку мы не задали первичного ключа в нашей модели Post, Django создал такой ключ за-->
+<!--            #нас (по умолчанию это порядковый номер, то есть 1, 2, 3…) и добавил поле pk к каждой записи блога.-->
+<!--            #http://127.0.0.1:8000/post/1/-->
             <p>{{ post.text|linebreaksbr }}</p>
         </div>
-        {% endfor %}
-    </body>
-</html>
+    {% endfor %}
+{% endblock %}
